@@ -58,6 +58,7 @@ public class LoginServlet extends HttpServlet {
 				//拉取用户信息，后面再改进
 				json.element("account", account);
 				json.element("items", JSONArray.fromObject(userDao.getValue(account, "items")));
+				json.element("tasks", JSONObject.fromObject(userDao.getValue(account, "tasks")));
 			} else {
 				code = -1;
 			}
