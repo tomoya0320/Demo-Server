@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wzb.dao.UserDao;
 import com.wzb.dao.UserDaoByMySql;
-import com.wzb.entity.UserDB;
 import net.sf.json.JSONObject;
 
 /**
@@ -35,9 +34,9 @@ public class AlterPasswordServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String account = request.getHeader("account");
-		String oldPsd = request.getHeader("oldPassword");
-		String newPsd = request.getHeader("newPassword");
-		JSONObject result = alterPsd(account, oldPsd, newPsd);
+		String oldPassword = request.getHeader("oldPassword");
+		String newPassword = request.getHeader("newPassword");
+		JSONObject result = alterPsd(account, oldPassword, newPassword);
 		response.getWriter().write(result.toString());
 	}
 
@@ -49,15 +48,13 @@ public class AlterPasswordServlet extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public JSONObject alterPsd(String account, String oldPsd, String newPsd) {
+	public JSONObject alterPsd(String account, String oldPassword, String newPassword) {
 		int code;
-		JSONObject json = new JSONObject();
-		UserDB userDB = new UserDB(account, oldPsd);
-		if (!userDao.search(userDB)) {
+		if (!userDao.search(account)) {
 			code = 0;
 		} else {
-			if (oldPsd.equals(userDao.getValue(account, "password"))) {
-				if(userDao.updateValue(userDB.account, "password", newPsd)){
+			if (oldPassword.equals(userDao.getValue(account, "password"))) {
+				if(userDao.updateValue(account, "password", newPassword)){
 					code = 1;
 				}else{
 					code = -2;
@@ -66,7 +63,7 @@ public class AlterPasswordServlet extends HttpServlet {
 				code = -1;
 			}
 		}
-
+		JSONObject json = new JSONObject();
 		json.element("code", code);
 		return json;
 	}

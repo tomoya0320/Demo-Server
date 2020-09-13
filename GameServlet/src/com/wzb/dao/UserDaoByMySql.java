@@ -37,10 +37,10 @@ public class UserDaoByMySql implements UserDao {
 	}
 
 	@Override
-	public boolean search(UserDB userData) {
+	public boolean search(String account) {
 		// TODO Auto-generated method stub
 		boolean result = false;
-		String sql = "select * from user where account='" + userData.account + "'";
+		String sql = "select * from user where account='" + account + "'";
 		try {
 			Statement stmt = getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -52,13 +52,15 @@ public class UserDaoByMySql implements UserDao {
 	}
 
 	@Override
-	public boolean insert(UserDB userData) {
+	public boolean insert(UserDB userDB) {
 		// TODO Auto-generated method stub
-		String sql = "insert into user(account, password) values(?,?)";
+		String sql = "insert into user(account, password, items, tasks) values(?,?,?,?)";
 		try {
 			PreparedStatement preStmt = getConnection().prepareStatement(sql);
-			preStmt.setString(1, userData.account);
-			preStmt.setString(2, userData.password);
+			preStmt.setString(1, userDB.account);
+			preStmt.setString(2, userDB.password);
+			preStmt.setString(3, userDB.items);
+			preStmt.setString(4, userDB.tasks);
 			preStmt.execute();
 			return true;
 		} catch (Exception e) {
@@ -69,9 +71,9 @@ public class UserDaoByMySql implements UserDao {
 	}
 
 	@Override
-	public String getValue(String id, String name) {
+	public String getValue(String account, String name) {
 		String value = "";
-		String sql = "select " + name + " from user where account='" + id + "'";
+		String sql = "select " + name + " from user where account='" + account + "'";
 		try {
 			Statement stmt = getConnection().createStatement();
 			ResultSet rs = stmt.executeQuery(sql);

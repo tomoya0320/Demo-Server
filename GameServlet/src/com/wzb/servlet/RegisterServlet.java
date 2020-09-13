@@ -38,9 +38,10 @@ public class RegisterServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String account = request.getHeader("account");
-		String psd = request.getHeader("password");
+		String password = request.getHeader("password");
 		String tasks = request.getHeader("tasks");
-		JSONObject result = addUser(account, psd, tasks);
+		String items = request.getHeader("items");
+		JSONObject result = addUser(account, password, items, tasks);
 		response.getWriter().write(result.toString());
 	}
 
@@ -54,15 +55,14 @@ public class RegisterServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public JSONObject addUser(String account, String psd, String tasks) {
+	public JSONObject addUser(String account, String password, String items, String tasks) {
 		int code;
 		JSONObject json = new JSONObject();
-		UserDB userDB = new UserDB(account, psd);
-		if (userDao.search(userDB)) {
+		UserDB userDB = new UserDB(account, password, items, tasks);
+		if (userDao.search(account)) {
 			code = -1;
 		} else {
-			if (userDao.insert(userDB) && userDao.updateValue(account, "tasks", tasks) &&
-				userDao.updateValue(account, "items", "[]")) {
+			if (userDao.insert(userDB)) {
 				code = 1;
 			} else {
 				code = -2;

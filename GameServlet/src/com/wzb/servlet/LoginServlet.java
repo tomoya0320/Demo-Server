@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.wzb.dao.UserDao;
 import com.wzb.dao.UserDaoByMySql;
-import com.wzb.entity.UserDB;
 
 import net.sf.json.*;
 
@@ -41,22 +40,22 @@ public class LoginServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		String account = request.getHeader("account");
-		String psd = request.getHeader("password");
-		JSONObject result = checkUser(account, psd);
+		String password = request.getHeader("password");
+		JSONObject result = checkUser(account, password);
 		response.getWriter().write(result.toString());
 	}
 
-	public JSONObject checkUser(String account, String psd) {
+	public JSONObject checkUser(String account, String password) {
 		int code;
 		JSONObject json = new JSONObject();
-		UserDB userDB = new UserDB(account, psd);
-		if (!userDao.search(userDB)) {
+		if (!userDao.search(account)) {
 			code = 0;
 		} else {
-			if (psd.equals(userDao.getValue(account, "password"))) {
+			if (password.equals(userDao.getValue(account, "password"))) {
 				code = 1;
 				//拉取用户信息，后面再改进
 				json.element("account", account);
+				json.element("password", password);
 				json.element("items", JSONArray.fromObject(userDao.getValue(account, "items")));
 				json.element("tasks", JSONObject.fromObject(userDao.getValue(account, "tasks")));
 			} else {
