@@ -6,6 +6,8 @@ public class UserDB {
 	public String items;
 	public String tasks;
 	
+	public UserDB(){ }
+	
 	public UserDB(String account, String password, String items, String tasks) {
 		this.account = account;
 		this.password = password;
