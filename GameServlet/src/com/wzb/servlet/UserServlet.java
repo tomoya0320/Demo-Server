@@ -52,7 +52,8 @@ public class UserServlet extends HttpServlet {
 		String password = request.getHeader("password");
 		String tasks = request.getHeader("tasks");
 		String items = request.getHeader("items");
-		UserDB user = new UserDB(account, password, items, tasks);
+		String mails = request.getHeader("mails");
+		UserDB user = new UserDB("", account, password, items, tasks, mails);
 		int resultCode = userDao.register(user);
 		JSONObject json;
 		if (resultCode == 1) {
@@ -74,10 +75,12 @@ public class UserServlet extends HttpServlet {
 		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
 			json.element("hashCode", hashCode);
-			//拉去用户数据
+			// 拉取用户数据
+			json.element("name", user.name);
 			json.element("account", user.account);
 			json.element("items", user.items);
 			json.element("tasks", user.tasks);
+			json.element("mails", user.mails);
 			hashCodes.put(account, hashCode);
 		}
 
