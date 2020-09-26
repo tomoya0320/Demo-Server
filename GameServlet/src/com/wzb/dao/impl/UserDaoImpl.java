@@ -2,6 +2,10 @@ package com.wzb.dao.impl;
 
 import com.wzb.dao.inter.UserDao;
 import com.wzb.entity.UserDB;
+
+import net.sf.json.JSONObject;
+
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -25,19 +29,28 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 
 	/**
 	 * 用户注册
-	 *
-	 * @param user
+	 * 
+	 * @param userDBJson
 	 *            新的用户
 	 * @return int -1为用户已存在1为注册成功0为注册失败
 	 * @name register
 	 */
 	@Override
-	public int register(UserDB user) {
-		UserDB existedUser = isUserExist(user.account);
+	public int register(JSONObject userDBJson) {
+		UserDB existedUser = isUserExist(userDBJson.getString("account"));
 		if (existedUser != null) {
 			return -1;
 		} else {
-			return insert(user);
+			UserDB userDB = new UserDB();
+			try {
+				for (Field field : UserDB.class.getDeclaredFields()) {
+					field.set(userDB, userDBJson.getString(field.getName()));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return insert(userDB);
 		}
 	}
 
@@ -79,7 +92,8 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 * @param psd
 	 *            用户密码
 	 * @return HashMap
-	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"user":返回用户实体
+	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"userDB":
+	 *         返回用户实体
 	 * @name login
 	 */
 	@Override
@@ -88,15 +102,15 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		UserDB existedUser = isUserExist(account);
 		if (existedUser == null) {
 			result.put("resultCode", 0);
-			result.put("user", null);
+			result.put("userDB", null);
 			return result;
 		}
 		if (existedUser.password.equals(psd)) {
 			result.put("resultCode", 1);
-			result.put("user", existedUser);
+			result.put("userDB", existedUser);
 		} else {
 			result.put("resultCode", -1);
-			result.put("user", null);
+			result.put("userDB", null);
 		}
 		return result;
 	}

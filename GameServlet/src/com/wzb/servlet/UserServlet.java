@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import static com.wzb.util.ControllerUtils.getMethod;
@@ -48,18 +49,11 @@ public class UserServlet extends HttpServlet {
 
 	private void register(UserDao userDao, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
-		String account = request.getHeader("account");
-		String password = request.getHeader("password");
-		String tasks = request.getHeader("tasks");
-		String items = request.getHeader("items");
-		String mails = request.getHeader("mails");
-		UserDB user = new UserDB("", account, password, items, tasks, mails);
-		int resultCode = userDao.register(user);
-		JSONObject json;
+		JSONObject userDBJson = JSONObject.fromObject(request.getHeader("userDB"));
+		int resultCode = userDao.register(userDBJson);
+		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
-			json = JSONObject.fromObject(user);
-		} else {
-			json = new JSONObject();
+			json.element("userDB", userDBJson);
 		}
 		json.element("resultCode", resultCode);
 		response.getWriter().write(json.toString());
@@ -68,20 +62,23 @@ public class UserServlet extends HttpServlet {
 	private void login(UserDao userDao, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String account = request.getHeader("account");
 		String password = request.getHeader("password");
-		String hashCode = request.getHeader("hashCode");
 		HashMap<String, Object> result = userDao.login(account, password);
 		int resultCode = (int) result.get("resultCode");
-		UserDB user = (UserDB) result.get("user");
 		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
-			json.element("hashCode", hashCode);
-			// 拉取用户数据
-			json.element("name", user.name);
-			json.element("account", user.account);
-			json.element("items", user.items);
-			json.element("tasks", user.tasks);
-			json.element("mails", user.mails);
-			hashCodes.put(account, hashCode);
+			UserDB userDB = (UserDB) result.get("userDB");
+			JSONObject userDBJson = new JSONObject();
+			try {
+				for (Field field : UserDB.class.getDeclaredFields()) {
+					userDBJson.element(field.getName(), field.get(userDB));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			json.element("userDB", userDBJson);
+			json.element("hashCode", request.getHeader("hashCode"));
+			hashCodes.put(account, request.getHeader("hashCode"));
 		}
 
 		json.element("resultCode", resultCode);

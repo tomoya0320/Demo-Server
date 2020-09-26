@@ -1,6 +1,9 @@
 package com.wzb.dao.inter;
 
 import com.wzb.entity.UserDB;
+
+import net.sf.json.JSONObject;
+
 import java.util.HashMap;
 
 public interface UserDao {
@@ -17,13 +20,13 @@ public interface UserDao {
 	/**
 	 * 用户注册
 	 * 
-	 * @param user
+	 * @param userDBJson
 	 *            新的用户
 	 * @return int -1为用户已存在1为注册成功0为注册失败
 	 * @name register
 	 */
-	int register(UserDB user);
-
+	int register(JSONObject userDBJson);
+	
 	/**
 	 * 修改某个用户的密码
 	 * 
@@ -46,7 +49,7 @@ public interface UserDao {
 	 * @param psd
 	 *            用户密码
 	 * @return HashMap
-	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"user":返回用户实体
+	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"userDB":返回用户实体
 	 * @name login
 	 */
 	HashMap<String, Object> login(String account, String psd);
