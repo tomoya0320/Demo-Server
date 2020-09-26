@@ -44,7 +44,12 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 			UserDB userDB = new UserDB();
 			try {
 				for (Field field : UserDB.class.getDeclaredFields()) {
-					field.set(userDB, userDBJson.getString(field.getName()));
+					if(field.getType().getSimpleName().equals("String")){
+						field.set(userDB, userDBJson.getString(field.getName()));
+					}else{
+						field.set(userDB, userDBJson.get(field.getName()));
+					}
+					
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
