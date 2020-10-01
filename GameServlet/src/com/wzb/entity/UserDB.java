@@ -10,5 +10,6 @@ public class UserDB {
 	public String password;
 	public String items;
 	public String tasks;
+	public String cards;
 	public String mails;
 }
