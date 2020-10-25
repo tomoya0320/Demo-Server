@@ -1,7 +1,8 @@
 package com.wzb.util;
 
 import com.wzb.constant.Methods;
-import javax.servlet.http.HttpServletRequest;
+
+import net.sf.json.JSONObject;
 
 public class ControllerUtils {
     /**
@@ -11,8 +12,8 @@ public class ControllerUtils {
      * @return Methods
      * @name getMethod
      */
-    public static Methods getMethod(HttpServletRequest request) {
-        String m = request.getHeader("method");
+    public static Methods getMethod(JSONObject requestData) {
+        String m = requestData.getString("method");
         Methods method = null;
         try {
             method = Methods.valueOf(m);

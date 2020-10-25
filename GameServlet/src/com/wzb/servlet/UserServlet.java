@@ -1,7 +1,6 @@
 package com.wzb.servlet;
 
 import net.sf.json.*;
-import com.wzb.constant.Methods;
 import com.wzb.dao.inter.UserDao;
 import com.wzb.entity.UserDB;
 import com.wzb.util.DaoFactoryUtils;
@@ -9,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -19,37 +21,38 @@ import static com.wzb.util.ControllerUtils.getMethod;
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static HashMap<String, String> tokens = new HashMap<String, String>();
+	private static Base64 base64 = new Base64();
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		doPost(request, response);
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		Methods method = getMethod(request);
 		UserDao userDao = (UserDao) DaoFactoryUtils.getDao(DaoFactoryUtils.DaoType.UserDao);
-		switch (method) {
+		JSONObject requestData = JSONObject.fromObject(new String(base64.decode(request.getHeader("data"))));
+		switch (getMethod(requestData)) {
 		case LOGIN:
-			login(userDao, request, response);
+			login(userDao, requestData, response);
 			break;
 		case ALTERPSD:
-			alterPsd(userDao, request, response);
+			alterPsd(userDao, requestData, response);
 			break;
 		case REGISTER:
-			register(userDao, request, response);
+			register(userDao, requestData, response);
 			break;
 		case UPDATE:
-			update(userDao, request, response);
+			update(userDao, requestData, response);
 			break;
 		default:
 			break;
 		}
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-		doPost(request, response);
-	}
-
-	private void register(UserDao userDao, HttpServletRequest request, HttpServletResponse response)
+	private void register(UserDao userDao, JSONObject requestData, HttpServletResponse response)
 			throws IOException {
-		JSONObject userDBJson = JSONObject.fromObject(request.getHeader("userDB"));
+		JSONObject userDBJson = JSONObject.fromObject(requestData.get("userDB"));
 		int resultCode = userDao.register(userDBJson);
 		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
@@ -59,9 +62,9 @@ public class UserServlet extends HttpServlet {
 		response.getWriter().write(json.toString());
 	}
 
-	private void login(UserDao userDao, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String account = request.getHeader("account");
-		String password = request.getHeader("password");
+	private void login(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
+		String account = requestData.getString("account");
+		String password = requestData.getString("password");
 		HashMap<String, Object> result = userDao.login(account, password);
 		int resultCode = (int) result.get("resultCode");
 		JSONObject json = new JSONObject();
@@ -77,36 +80,36 @@ public class UserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			json.element("userDB", userDBJson);
-			json.element("token", request.getHeader("token"));
-			tokens.put(account, request.getHeader("token"));
+			json.element("token", requestData.getString("token"));
+			tokens.put(account, requestData.getString("token"));
 		}
 
 		json.element("resultCode", resultCode);
 		response.getWriter().write(json.toString());
 	}
 
-	private void alterPsd(UserDao userDao, HttpServletRequest request, HttpServletResponse response)
+	private void alterPsd(UserDao userDao, JSONObject requestData, HttpServletResponse response)
 			throws IOException {
-		String account = request.getHeader("account");
-		String oldPassword = request.getHeader("oldPassword");
-		String newPassword = request.getHeader("newPassword");
+		String account = requestData.getString("account");
+		String oldPassword = requestData.getString("oldPassword");
+		String newPassword = requestData.getString("newPassword");
 		int resultCode = userDao.alterPsd(account, oldPassword, newPassword);
 		JSONObject json = new JSONObject();
 		json.element("resultCode", resultCode);
 		response.getWriter().write(json.toString());
 	}
 
-	private void update(UserDao userDao, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		String account = request.getHeader("account");
-		String token = request.getHeader("token");
-		JSONArray types = JSONArray.fromObject(request.getHeader("types"));
+	private void update(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
+		String account = requestData.getString("account");
+		String token = requestData.getString("token");
+		JSONArray types = JSONArray.fromObject(requestData.getString("types"));
 		int resultCode;
 		if (!tokens.containsKey(account) || !tokens.get(account).equals(token)) {
 			resultCode = -2; // hashCode验证失败
 		} else {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			for (int i = 0; i < types.size(); i++) {
-				data.put(types.get(i).toString(), request.getHeader(types.get(i).toString()));
+				data.put(types.get(i).toString(), requestData.getString(types.get(i).toString()));
 			}
 			resultCode = userDao.updateUserData(account, data);
 		}
