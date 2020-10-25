@@ -18,7 +18,7 @@ import static com.wzb.util.ControllerUtils.getMethod;
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static HashMap<String, String> hashCodes = new HashMap<String, String>();
+	private static HashMap<String, String> tokens = new HashMap<String, String>();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
@@ -77,8 +77,8 @@ public class UserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			json.element("userDB", userDBJson);
-			json.element("hashCode", request.getHeader("hashCode"));
-			hashCodes.put(account, request.getHeader("hashCode"));
+			json.element("token", request.getHeader("token"));
+			tokens.put(account, request.getHeader("token"));
 		}
 
 		json.element("resultCode", resultCode);
@@ -98,10 +98,10 @@ public class UserServlet extends HttpServlet {
 
 	private void update(UserDao userDao, HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String account = request.getHeader("account");
-		String hashCode = request.getHeader("hashCode");
+		String token = request.getHeader("token");
 		JSONArray types = JSONArray.fromObject(request.getHeader("types"));
 		int resultCode;
-		if (!hashCodes.containsKey(account) || !hashCodes.get(account).equals(hashCode)) {
+		if (!tokens.containsKey(account) || !tokens.get(account).equals(token)) {
 			resultCode = -2; // hashCode验证失败
 		} else {
 			HashMap<String, Object> data = new HashMap<String, Object>();
