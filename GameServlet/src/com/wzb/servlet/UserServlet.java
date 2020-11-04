@@ -26,7 +26,7 @@ public class UserServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
@@ -50,8 +50,7 @@ public class UserServlet extends HttpServlet {
 		}
 	}
 
-	private void register(UserDao userDao, JSONObject requestData, HttpServletResponse response)
-			throws IOException {
+	private void register(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
 		JSONObject userDBJson = JSONObject.fromObject(requestData.get("userDB"));
 		int resultCode = userDao.register(userDBJson);
 		JSONObject json = new JSONObject();
@@ -88,8 +87,7 @@ public class UserServlet extends HttpServlet {
 		response.getWriter().write(json.toString());
 	}
 
-	private void alterPsd(UserDao userDao, JSONObject requestData, HttpServletResponse response)
-			throws IOException {
+	private void alterPsd(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
 		String account = requestData.getString("account");
 		String oldPassword = requestData.getString("oldPassword");
 		String newPassword = requestData.getString("newPassword");
@@ -101,10 +99,12 @@ public class UserServlet extends HttpServlet {
 
 	private void update(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
 		String account = requestData.getString("account");
+		String password = requestData.getString("password");
 		String token = requestData.getString("token");
+		HashMap<String, Object> result = userDao.login(account, password);
 		JSONArray types = JSONArray.fromObject(requestData.getString("types"));
 		int resultCode;
-		if (!tokens.containsKey(account) || !tokens.get(account).equals(token)) {
+		if ((int) result.get("resultCode") != 1 || !tokens.containsKey(account) || !tokens.get(account).equals(token)) {
 			resultCode = -2; // hashCode验证失败
 		} else {
 			HashMap<String, Object> data = new HashMap<String, Object>();
