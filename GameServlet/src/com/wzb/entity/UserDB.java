@@ -12,4 +12,5 @@ public class UserDB {
 	public String tasks;
 	public String cards;
 	public String mails;
+	public String chars;
 }
