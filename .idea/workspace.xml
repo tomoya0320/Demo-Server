@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="afeba09f-9f77-4eb7-8bc7-ee1a7ad8be73" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Demo_Server_war.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/Demo_Server_war_exploded.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_javax_servlet_api_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_7_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_engine_5_7_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_commons_1_7_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_junit_platform_junit_platform_engine_1_7_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_opentest4j_opentest4j_1_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Demo-Server.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/Demo-Server.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.classpath" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/.jsdtscope" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.core.resources.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.jdt.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.wst.common.component" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.wst.common.project.facet.core.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.wst.jsdt.ui.superType.container" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/.settings/org.eclipse.wst.jsdt.ui.superType.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/GameServlet.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/commons-beanutils-1.7.0.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/commons-codec-1.15.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/commons-collections-3.1.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/commons-lang-2.5.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/commons-logging.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/ezmorph-1.0.3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/json-lib-2.4-jdk15.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/lib/mysql-connector-java-8.0.22.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/WebContent/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/build/classes/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/build/classes/databaseConfig.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/build/classes/factory.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/constant/Methods.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/constant/Status.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/dao/impl/BaseDaoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/dao/impl/UserDaoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/dao/inter/BaseDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/dao/inter/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/entity/UserDB.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/servlet/UserServlet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/test/DatabaseTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/util/ControllerUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/util/DaoFactoryUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/util/DataSourceUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/com/wzb/util/JdbcUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/databaseConfig.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameServlet/src/factory.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/.project" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/.settings/org.eclipse.wst.server.core.prefs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/catalina.policy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/catalina.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/context.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/server.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/tomcat-users.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Servers/Tomcat v7.0 Server at localhost-config/web.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="1" />
+  </component>
+  <component name="ProjectId" id="1mrvmawM5gZ03mtOzMNHMOYuCf2" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="afeba09f-9f77-4eb7-8bc7-ee1a7ad8be73" name="Default Changelist" comment="" />
+      <created>1610264686837</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1610264686837</updated>
+      <workItem from="1610264689758" duration="255000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
