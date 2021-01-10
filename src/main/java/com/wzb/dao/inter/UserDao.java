@@ -1,9 +1,7 @@
 package com.wzb.dao.inter;
 
 import com.wzb.entity.UserDB;
-
 import net.sf.json.JSONObject;
-
 import java.util.HashMap;
 
 public interface UserDao {

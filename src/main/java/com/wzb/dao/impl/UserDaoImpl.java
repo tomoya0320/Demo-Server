@@ -2,9 +2,7 @@ package com.wzb.dao.impl;
 
 import com.wzb.dao.inter.UserDao;
 import com.wzb.entity.UserDB;
-
 import net.sf.json.JSONObject;
-
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedList;

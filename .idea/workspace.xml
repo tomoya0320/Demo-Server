@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="afeba09f-9f77-4eb7-8bc7-ee1a7ad8be73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/wzb/servlet/UserServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/wzb/servlet/UserServlet.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +229,8 @@
       <updated>1610264686837</updated>
       <workItem from="1610264689758" duration="255000" />
       <workItem from="1610264955843" duration="6223000" />
-      <workItem from="1610271342866" duration="1422000" />
+      <workItem from="1610271342866" duration="3973000" />
+      <workItem from="1610275663937" duration="8000" />
     </task>
     <servers />
   </component>
@@ -252,6 +252,7 @@
   <component name="XDebuggerManager">
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="java.util.stream.ReferencePipeline$Head" memberName="sourceSpliterator" />
         <PinnedItemInfo parentTag="org.apache.tomcat.util.buf.CharChunk" memberName="buff" />
       </pinned-members>
     </pin-to-top-manager>

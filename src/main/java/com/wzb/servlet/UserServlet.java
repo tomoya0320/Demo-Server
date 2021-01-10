@@ -1,25 +1,25 @@
 package com.wzb.servlet;
 
-import net.sf.json.*;
 import com.wzb.dao.inter.UserDao;
 import com.wzb.entity.UserDB;
+import com.wzb.util.ControllerUtils;
 import com.wzb.util.DaoFactoryUtils;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import org.apache.commons.codec.binary.Base64;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.codec.binary.Base64;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-
-import static com.wzb.util.ControllerUtils.getMethod;
 
 @WebServlet("/UserServlet")
 public class UserServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static HashMap<String, String> tokens = new HashMap<String, String>();
 	private static Base64 base64 = new Base64();
+	private static HashMap<String, String> tokens = new HashMap();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		doPost(request, response);
@@ -29,8 +29,8 @@ public class UserServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		UserDao userDao = (UserDao) DaoFactoryUtils.getDao(DaoFactoryUtils.DaoType.UserDao);
-		JSONObject requestData = JSONObject.fromObject(new String(base64.decode(request.getHeader("data"))));
-		switch (getMethod(requestData)) {
+		JSONObject requestData = JSONObject.fromObject(new String(base64.decode(request.getReader().readLine()), StandardCharsets.UTF_8));
+		switch (ControllerUtils.getMethod(requestData)) {
 			case LOGIN:
 				login(userDao, requestData, response);
 				break;
