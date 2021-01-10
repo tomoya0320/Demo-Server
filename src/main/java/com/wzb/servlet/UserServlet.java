@@ -8,9 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.codec.binary.Base64;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -33,20 +31,20 @@ public class UserServlet extends HttpServlet {
 		UserDao userDao = (UserDao) DaoFactoryUtils.getDao(DaoFactoryUtils.DaoType.UserDao);
 		JSONObject requestData = JSONObject.fromObject(new String(base64.decode(request.getHeader("data"))));
 		switch (getMethod(requestData)) {
-		case LOGIN:
-			login(userDao, requestData, response);
-			break;
-		case ALTERPSD:
-			alterPsd(userDao, requestData, response);
-			break;
-		case REGISTER:
-			register(userDao, requestData, response);
-			break;
-		case UPDATE:
-			update(userDao, requestData, response);
-			break;
-		default:
-			break;
+			case LOGIN:
+				login(userDao, requestData, response);
+				break;
+			case ALTERPSD:
+				alterPsd(userDao, requestData, response);
+				break;
+			case REGISTER:
+				register(userDao, requestData, response);
+				break;
+			case UPDATE:
+				update(userDao, requestData, response);
+				break;
+			default:
+				break;
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.wzb.util;
 
-
 import java.io.IOException;
 import java.util.Properties;
 
@@ -18,9 +17,10 @@ public class DaoFactoryUtils {
         /**
          * Dao类型
          */
-         BaseDao,UserDao
+        BaseDao, UserDao
     }
-    public static Object getDao(DaoType daoType){
+
+    public static Object getDao(DaoType daoType) {
         String className;
         Object bean;
         /**

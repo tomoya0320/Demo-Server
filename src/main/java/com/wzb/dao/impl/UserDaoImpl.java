@@ -16,15 +16,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 * @param account
 	 *            用户ID
 	 * @return boolean 是否存在
-	 * @name isUserExist
+	 * @name queryUser
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public UserDB isUserExist(String account) {
-		HashMap<String, Object> condition = new HashMap<String, Object>();
+	public UserDB queryUser(String account) {
+		HashMap<String, Object> condition = new HashMap();
 		condition.put("account", "^" + account + "$");
-		LinkedList<UserDB> existedUser = (LinkedList<UserDB>) query(UserDB.class, condition);
-		return existedUser.size() > 0 ? existedUser.element() : null;
+		LinkedList existedUser = query(UserDB.class, condition);
+		return existedUser.size() > 0 ? (UserDB) existedUser.element() : null;
 	}
 
 	/**
@@ -37,7 +36,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 */
 	@Override
 	public int register(JSONObject userDBJson) {
-		UserDB existedUser = isUserExist(userDBJson.getString("account"));
+		UserDB existedUser = queryUser(userDBJson.getString("account"));
 		if (existedUser != null) {
 			return -1;
 		} else {
@@ -52,7 +51,6 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 					
 				}
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return insert(userDB);
@@ -68,16 +66,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 *            原密码
 	 * @param nPsd
 	 *            新密码
-	 * @return int 0为用户不存在1为修改成功-1为原密码错误-2为修改失败
+	 * @return int 0为用户不存在1为修改成功-1为原密码错误-2为其他异常
 	 * @name alterPsd
 	 */
 	@Override
 	public int alterPsd(String account, String oPsd, String nPsd) {
-		UserDB existedUser = isUserExist(account);
+		UserDB existedUser = queryUser(account);
 		if (existedUser != null) {
 			if (oPsd.equals(existedUser.password)) {
-				HashMap<String, Object> condition = new HashMap<String, Object>();
-				HashMap<String, Object> data = new HashMap<String, Object>();
+				HashMap<String, Object> condition = new HashMap();
+				HashMap<String, Object> data = new HashMap();
 				condition.put("account", account);
 				data.put("password", nPsd);
 				return update(UserDB.class, condition, data) == 1 ? 1 : -2;
@@ -104,7 +102,7 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public HashMap<String, Object> login(String account, String psd) {
 		HashMap<String, Object> result = new HashMap<>();
-		UserDB existedUser = isUserExist(account);
+		UserDB existedUser = queryUser(account);
 		if (existedUser == null) {
 			result.put("resultCode", 0);
 			result.put("userDB", null);
@@ -132,10 +130,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 */
 	@Override
 	public int updateUserData(String account, HashMap<String, Object> data) {
-		// TODO Auto-generated method stub
-		UserDB existedUser = isUserExist(account);
+		UserDB existedUser = queryUser(account);
 		if (existedUser != null) {
-			HashMap<String, Object> condition = new HashMap<String, Object>();
+			HashMap<String, Object> condition = new HashMap();
 			condition.put("account", account);
 			return update(UserDB.class, condition, data) == 1 ? 1 : -1;
 		} else {

@@ -19,19 +19,6 @@ public class DataSourceUtils {
      * 测试数据库连接的等待时长
      */
     private static int TIMEOUT;
-    /**
-     * 初始连接数
-     */
-    private static int INIT_SIZE;
-    /**
-     * 最大连接数
-     */
-    private static int MAX_SIZE;
-    /**
-     * 当前已经创建的连接数
-     */
-    private static int currentCount = 0;
-
     private static String url;
     private static String user;
     private static String password;
@@ -51,19 +38,17 @@ public class DataSourceUtils {
             prop.load(Thread.currentThread().getContextClassLoader().getResourceAsStream(PROP_PATH));
             /**
              * 驱动类名称
-                    */
+             */
             String driver = prop.getProperty("driver");
             url = prop.getProperty("url");
             user = prop.getProperty("user");
             password = prop.getProperty("password");
-            MAX_SIZE = Integer.parseInt(prop.getProperty("MAX_SIZE"));
-            INIT_SIZE = Integer.parseInt(prop.getProperty("INIT_SIZE"));
             TIMEOUT = Integer.parseInt(prop.getProperty("TIMEOUT"));
             /**
              * 注册驱动
              */
             Class.forName(driver);
-            instance= new DataSourceUtils();
+            instance = new DataSourceUtils();
         } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
             throw new ExceptionInInitializerError(e);
@@ -86,29 +71,26 @@ public class DataSourceUtils {
      *
      * @return java.sql.Connection
      * @name getConnection
-     * @notice 数据库连接的数量受到配置文件中最大值的限制
      */
-    public Connection getConnection()  {
+    public Connection getConnection() {
         if (connPool.size() > 0) {
             /**
              * 先检查连接是否可用，如果不可用，关闭该连接，返回一个新连接
              */
             Connection conn = connPool.removeLast();
             try {
-                if(conn.isValid(TIMEOUT)){
+                if (conn.isValid(TIMEOUT)) {
                     return conn;
-                }else {
+                } else {
                     destroyConnection(conn);
                     return createConnection();
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
                 return null;
             }
-        } else if (currentCount < MAX_SIZE) {
-            return createConnection();
         } else {
-            return null;
+            return createConnection();
         }
     }
 
@@ -121,27 +103,6 @@ public class DataSourceUtils {
      */
     public void freeConnection(Connection conn) {
         this.connPool.addLast(conn);
-    }
-
-
-    /**
-     * 负责返回当前已经创建的连接数
-     *
-     * @return int 当前已经创建的连接数
-     * @name getCurrentCount
-     */
-    public int getCurrentCount() {
-        return currentCount;
-    }
-
-    /**
-     * 负责返回当前池中剩余的空闲连接数
-     *
-     * @return int 当前空闲连接数
-     * @name getfreeCount
-     */
-    public int getfreeCount() {
-        return this.connPool.size();
     }
 
     /**
@@ -195,13 +156,12 @@ public class DataSourceUtils {
      * @return java.sql.Connection
      * @name createConnection
      */
-    private Connection createConnection()  {
-        currentCount++;
+    private Connection createConnection() {
         try {
             return DriverManager.getConnection(url, user, password);
         } catch (SQLException e) {
-           e.printStackTrace();
-           return  null;
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -214,25 +174,11 @@ public class DataSourceUtils {
      */
     private void destroyConnection(Connection conn) {
         try {
-            if(conn!=null){
+            if (conn != null) {
                 conn.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
-    /**
-     * 创建连接池实例，初始化数据库连接池
-     *
-     * @name DataSourceUtils
-     */
-    private DataSourceUtils() {
-        for (int i = 0; i < INIT_SIZE; i++) {
-            this.connPool.add(this.createConnection());
-        }
-    }
-
-
 }

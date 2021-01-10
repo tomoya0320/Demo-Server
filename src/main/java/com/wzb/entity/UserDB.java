@@ -1,10 +1,10 @@
 package com.wzb.entity;
 
 public class UserDB {
-    public int ap;
-    public int maxAp;
-    public int lv;
-    public int exp;
+	public int ap;
+	public int maxAp;
+	public int lv;
+	public int exp;
 	public String name;
 	public String account;
 	public String password;

@@ -15,7 +15,7 @@ public interface UserDao {
 	 * @return User 不存在则是null
 	 * @name isUserExist
 	 */
-	UserDB isUserExist(String account);
+	UserDB queryUser(String account);
 
 	/**
 	 * 用户注册

@@ -1,83 +1,58 @@
 package com.wzb.util;
 
+import java.lang.reflect.Field;
 import java.sql.*;
+import java.util.LinkedList;
 
 public class JdbcUtils {
     private static DataSourceUtils dataSrc = DataSourceUtils.getInstance();
 
-    private JdbcUtils() {
-    }
-
+    private JdbcUtils() { }
 
     /**
-     * 负责从数据库连接池中获取数据库连接
-     *
-     * @return java.sql.Connection
-     * @name getConnection
-     * @notice 数据库连接的数量受到配置文件中最大值的限制
+     * 执行sql语句
+     * @param sql sql语句
+     * @param params 参数列表
      */
-    public static Connection getConnection() {
-        return dataSrc.getConnection();
-    }
-
-    /**
-     * 用于将数据库连接放回连接池中,并释放Statement和ResultSet的资源
-     *
-     * @param conn 数据库连接
-     * @name close
-     */
-    public static void close(ResultSet rs, Statement st, Connection conn) {
+    public static void execute(String sql, Object[] params) {
         try {
-            if (rs != null) {
-                rs.close();
-            }
-        } catch (SQLException e) {
+            Connection conn = dataSrc.getConnection();
+            PreparedStatement preStmt = conn.prepareStatement(sql);
+            JdbcUtils.setParams(preStmt, params);
+            preStmt.execute();
+            preStmt.close();
+            dataSrc.freeConnection(conn);
+        }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static LinkedList executeQuery(Class<?> classType, String sql, Object[] params) {
         try {
-            if (st != null) {
-                st.close();
+            LinkedList resultList = new LinkedList();
+            Connection conn = dataSrc.getConnection();
+            PreparedStatement preStmt = conn.prepareStatement(sql);
+            JdbcUtils.setParams(preStmt, params);
+            ResultSet result = preStmt.executeQuery();
+
+            while ((result.next())) {
+                Object obj = classType.newInstance();
+                for (Field field : classType.getDeclaredFields()) {
+                    field.set(obj, result.getObject(field.getName().toLowerCase()));
+                }
+                resultList.add(obj);
             }
-        } catch (SQLException e) {
+
+            result.close();
+            preStmt.close();
+            dataSrc.freeConnection(conn);
+
+            return resultList;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if (conn != null) {
-            dataSrc.freeConnection(conn);
-        }
-    }
 
-    /**
-     * 用于将一个数据库连接放回连接池中
-     *
-     * @param conn 数据库连接
-     * @name close
-     */
-    public static void close(Connection conn) {
-        if (conn != null) {
-            dataSrc.freeConnection(conn);
-        }
-    }
-
-
-    /**
-     * 负责返回当前池中剩余的空闲连接数
-     *
-     * @return int 当前空闲连接数
-     * @name getfreeCount
-     */
-    public static int getfreeCount() {
-        return dataSrc.getfreeCount();
-    }
-
-
-    /**
-     * 负责返回当前已经创建的连接数
-     *
-     * @return int 当前已经创建的连接数
-     * @name getCurrentCount
-     */
-    public static int getCurrentCount() {
-        return dataSrc.getCurrentCount();
+        return null;
     }
 
     /**
@@ -87,7 +62,7 @@ public class JdbcUtils {
      * @param params 参数数组
      * @name setParams
      */
-    public static void setParams(PreparedStatement ps, Object[] params) {
+    private static void setParams(PreparedStatement ps, Object[] params) {
         if (params != null) {
             for (int i = 0; i < params.length; i++) {
                 try {
@@ -98,7 +73,6 @@ public class JdbcUtils {
             }
         }
     }
-
 
     /**
      * 返回数据库的插入语法
@@ -114,7 +88,7 @@ public class JdbcUtils {
      *
      * @name getDeleteStatement
      */
-    public static String getDeleteStatement(){
+    public static String getDeleteStatement() {
         return dataSrc.getDeleteStatement();
     }
 
@@ -123,7 +97,7 @@ public class JdbcUtils {
      *
      * @name getUpdateStatement
      */
-    public static String getUpdateStatement(){
+    public static String getUpdateStatement() {
         return dataSrc.getUpdateStatement();
     }
 
@@ -132,7 +106,7 @@ public class JdbcUtils {
      *
      * @name getQueryStatement
      */
-    public static String getQueryStatement(){
+    public static String getQueryStatement() {
         return dataSrc.getQueryStatement();
     }
 
@@ -141,7 +115,7 @@ public class JdbcUtils {
      *
      * @name getQueryNoConditionStatement
      */
-    public static String getQueryNoConditionStatement(){
+    public static String getQueryNoConditionStatement() {
         return dataSrc.getQueryNoConditionStatement();
     }
 }
