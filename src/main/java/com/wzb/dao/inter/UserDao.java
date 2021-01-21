@@ -1,6 +1,6 @@
 package com.wzb.dao.inter;
 
-import com.wzb.entity.UserDB;
+import com.wzb.entity.UserData;
 import net.sf.json.JSONObject;
 import java.util.HashMap;
 
@@ -13,7 +13,7 @@ public interface UserDao {
 	 * @return User 不存在则是null
 	 * @name isUserExist
 	 */
-	UserDB queryUser(String account);
+	UserData queryUser(String account);
 
 	/**
 	 * 用户注册

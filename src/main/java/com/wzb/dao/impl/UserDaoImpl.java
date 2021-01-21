@@ -1,7 +1,6 @@
 package com.wzb.dao.impl;
-
 import com.wzb.dao.inter.UserDao;
-import com.wzb.entity.UserDB;
+import com.wzb.entity.UserData;
 import net.sf.json.JSONObject;
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -17,11 +16,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 * @name queryUser
 	 */
 	@Override
-	public UserDB queryUser(String account) {
+	public UserData queryUser(String account) {
 		HashMap<String, Object> condition = new HashMap();
 		condition.put("account", "^" + account + "$");
-		LinkedList existedUser = query(UserDB.class, condition);
-		return existedUser.size() > 0 ? (UserDB) existedUser.element() : null;
+		LinkedList existedUser = query(UserData.class, condition);
+		return existedUser.size() > 0 ? (UserData) existedUser.element() : null;
 	}
 
 	/**
@@ -34,24 +33,24 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 */
 	@Override
 	public int register(JSONObject userDBJson) {
-		UserDB existedUser = queryUser(userDBJson.getString("account"));
+		UserData existedUser = queryUser(userDBJson.getString("account"));
 		if (existedUser != null) {
 			return -1;
 		} else {
-			UserDB userDB = new UserDB();
+			UserData userData = new UserData();
 			try {
-				for (Field field : UserDB.class.getDeclaredFields()) {
+				for (Field field : UserData.class.getDeclaredFields()) {
 					if(field.getType().getSimpleName().equals("String")){
-						field.set(userDB, userDBJson.getString(field.getName()));
+						field.set(userData, userDBJson.getString(field.getName()));
 					}else{
-						field.set(userDB, userDBJson.get(field.getName()));
+						field.set(userData, userDBJson.get(field.getName()));
 					}
 					
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			return insert(userDB);
+			return insert(userData);
 		}
 	}
 
@@ -69,14 +68,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 */
 	@Override
 	public int alterPsd(String account, String oPsd, String nPsd) {
-		UserDB existedUser = queryUser(account);
+		UserData existedUser = queryUser(account);
 		if (existedUser != null) {
 			if (oPsd.equals(existedUser.password)) {
 				HashMap<String, Object> condition = new HashMap();
 				HashMap<String, Object> data = new HashMap();
 				condition.put("account", account);
 				data.put("password", nPsd);
-				return update(UserDB.class, condition, data) == 1 ? 1 : -2;
+				return update(UserData.class, condition, data) == 1 ? 1 : -2;
 			} else {
 				return -1;
 			}
@@ -93,25 +92,25 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 * @param psd
 	 *            用户密码
 	 * @return HashMap
-	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"userDB":
+	 *         <String,Object> 键"resultCode":0为用户不存在1为登录成功-1为密码错误,键"user":
 	 *         返回用户实体
 	 * @name login
 	 */
 	@Override
 	public HashMap<String, Object> login(String account, String psd) {
 		HashMap<String, Object> result = new HashMap<>();
-		UserDB existedUser = queryUser(account);
+		UserData existedUser = queryUser(account);
 		if (existedUser == null) {
 			result.put("resultCode", 0);
-			result.put("userDB", null);
+			result.put("user", null);
 			return result;
 		}
 		if (existedUser.password.equals(psd)) {
 			result.put("resultCode", 1);
-			result.put("userDB", existedUser);
+			result.put("user", existedUser);
 		} else {
 			result.put("resultCode", -1);
-			result.put("userDB", null);
+			result.put("user", null);
 		}
 		return result;
 	}
@@ -128,11 +127,11 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	 */
 	@Override
 	public int updateUserData(String account, HashMap<String, Object> data) {
-		UserDB existedUser = queryUser(account);
+		UserData existedUser = queryUser(account);
 		if (existedUser != null) {
 			HashMap<String, Object> condition = new HashMap();
 			condition.put("account", account);
-			return update(UserDB.class, condition, data) == 1 ? 1 : -1;
+			return update(UserData.class, condition, data) == 1 ? 1 : -1;
 		} else {
 			return 0;
 		}

@@ -1,6 +1,6 @@
 package com.wzb.entity;
 
-public class UserDB {
+public class UserData {
 	public int ap;
 	public int maxAp;
 	public int lv;
@@ -13,4 +13,5 @@ public class UserDB {
 	public String cards;
 	public String mails;
 	public String chars;
+	public String teams;
 }

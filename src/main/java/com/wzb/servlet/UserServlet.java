@@ -1,7 +1,7 @@
 package com.wzb.servlet;
 
 import com.wzb.dao.inter.UserDao;
-import com.wzb.entity.UserDB;
+import com.wzb.entity.UserData;
 import com.wzb.util.ControllerUtils;
 import com.wzb.util.DaoFactoryUtils;
 import net.sf.json.JSONArray;
@@ -49,11 +49,11 @@ public class UserServlet extends HttpServlet {
 	}
 
 	private void register(UserDao userDao, JSONObject requestData, HttpServletResponse response) throws IOException {
-		JSONObject userDBJson = JSONObject.fromObject(requestData.get("userDB"));
+		JSONObject userDBJson = JSONObject.fromObject(requestData.get("user"));
 		int resultCode = userDao.register(userDBJson);
 		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
-			json.element("userDB", userDBJson);
+			json.element("user", userDBJson);
 		}
 		json.element("resultCode", resultCode);
 		response.getWriter().write(json.toString());
@@ -66,17 +66,17 @@ public class UserServlet extends HttpServlet {
 		int resultCode = (int) result.get("resultCode");
 		JSONObject json = new JSONObject();
 		if (resultCode == 1) {
-			UserDB userDB = (UserDB) result.get("userDB");
+			UserData userData = (UserData) result.get("user");
 			JSONObject userDBJson = new JSONObject();
 			try {
-				for (Field field : UserDB.class.getDeclaredFields()) {
-					userDBJson.element(field.getName(), field.get(userDB));
+				for (Field field : UserData.class.getDeclaredFields()) {
+					userDBJson.element(field.getName(), field.get(userData));
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			json.element("userDB", userDBJson);
+			json.element("user", userDBJson);
 			json.element("token", requestData.getString("token"));
 			tokens.put(account, requestData.getString("token"));
 		}
