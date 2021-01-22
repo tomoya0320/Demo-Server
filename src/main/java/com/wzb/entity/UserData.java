@@ -1,11 +1,12 @@
 package com.wzb.entity;
 
 public class UserData {
-	public int ap;
-	public int maxAp;
 	public int lv;
 	public int exp;
+	public int ap;
+	public int maxAp;
 	public String name;
+	public int validGuid;
 	public String account;
 	public String password;
 	public String items;
