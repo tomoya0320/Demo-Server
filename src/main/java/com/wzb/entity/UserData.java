@@ -7,6 +7,7 @@ public class UserData {
 	public int maxAp;
 	public String name;
 	public int validGuid;
+	public int teamIndex;
 	public String account;
 	public String password;
 	public String items;
