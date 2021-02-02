@@ -16,4 +16,5 @@ public class UserData {
 	public String mails;
 	public String chars;
 	public String teams;
+	public String levels;
 }
