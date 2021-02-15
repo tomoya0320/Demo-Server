@@ -2,7 +2,6 @@ package com.wzb.entity;
 
 public class UserData {
 	public int lv;
-	public int exp;
 	public int ap;
 	public int maxAp;
 	public String name;
