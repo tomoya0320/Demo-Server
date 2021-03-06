@@ -2,8 +2,6 @@ package com.wzb.entity;
 
 public class UserData {
 	public int lv;
-	public int ap;
-	public int maxAp;
 	public String name;
 	public int validGuid;
 	public int teamIndex;

@@ -17,7 +17,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public int insert(Object obj) {
-		String tableName = obj.getClass().getSimpleName().toLowerCase(); // 获取数据库里的表格名字，由于表格都是小写的这里需要转换一下
+		String tableName = obj.getClass().getSimpleName(); // 获取数据库里的表格名字
 		Field[] fields = obj.getClass().getDeclaredFields(); // 获取所有的属性
 		StringBuilder fieldNames = new StringBuilder();
 		StringBuilder values = new StringBuilder();
@@ -49,7 +49,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public int delete(Object obj) {
-		String tableName = obj.getClass().getSimpleName().toLowerCase(); // 获取数据库里的表格名字，由于表格都是小写的这里需要转换一下
+		String tableName = obj.getClass().getSimpleName(); // 获取数据库里的表格名字
 		Field[] fields = obj.getClass().getDeclaredFields(); // 获取所有的属性
 		StringBuilder fieldNames = new StringBuilder();
 		LinkedList fieldVals = new LinkedList();
@@ -80,7 +80,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public int delete(Class<?> classType, HashMap<String, Object> condition) {
-		String tableName = classType.getSimpleName().toLowerCase(); // 获取数据库里的表格名字，由于表格都是小写的这里需要转换一下
+		String tableName = classType.getSimpleName(); // 获取数据库里的表格名字
 		StringBuilder fieldNames = new StringBuilder();
 		for (String field : condition.keySet()) {
 			fieldNames.append(field + "=? and ");
@@ -104,7 +104,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public int update(Class<?> classType, HashMap<String, Object> condition, HashMap<String, Object> data) {
-		String tableName = classType.getSimpleName().toLowerCase(); // 获取数据库里的表格名字，由于表格都是小写的这里需要转换一下
+		String tableName = classType.getSimpleName(); // 获取数据库里的表格名字
 		StringBuilder setNames = new StringBuilder();
 		StringBuilder whereNames = new StringBuilder();
 		try {
@@ -139,7 +139,7 @@ public abstract class BaseDaoImpl implements BaseDao {
 	 */
 	@Override
 	public LinkedList query(Class<?> classType, HashMap<String, Object> condition) {
-		String tableName = classType.getSimpleName().toLowerCase();
+		String tableName = classType.getSimpleName();
 
 		String sql;
 		if (condition != null) {
